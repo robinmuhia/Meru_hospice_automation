@@ -20,10 +20,10 @@ class DoctorOut(BaseModel):
 
 class PatientCreate(BaseModel):
     name:str
+    lower_name:str
     age: int
     phone_number:int
     num_images:int
-    owner_id:int
 
 
 class PatientOut(BaseModel):
@@ -38,7 +38,7 @@ class PatientOut(BaseModel):
         
 
 class PatientsOut(BaseModel):
-    patients: List[PatientCreate] | Optional[str] = None
+    patients: List[PatientOut] | Optional[str] = None
 
     class Config:
         orm_mode = True

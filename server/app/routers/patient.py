@@ -32,12 +32,13 @@ def create_patient(patient:schemas.PatientCreate,id:int,db:Session = Depends(get
 @router.get('/{id}',status_code=status.HTTP_200_OK,response_model=schemas.PatientOut)
 def get_one_patient(id:int,db:Session = Depends(get_db),doctor:int = Depends(oauth2.get_current_user)): 
     patient = db.query(models.Patient).filter(models.Patient.id== id).first()
-    if patient.owner_id != doctor.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                            detail='Not authorized to perform requested action')
     if not patient:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Patient with id {id} does not exist')
+    if patient.owner_id != doctor.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail='Not authorized to perform requested action')
+
     return patient
 
 
