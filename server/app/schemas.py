@@ -44,33 +44,31 @@ class PatientsOut(BaseModel):
         orm_mode = True
         
 
-class PostBase(BaseModel):
-    title:str
-    content: str
-    published: bool = True
+class NoteCreate(BaseModel):
+    disease_symptoms: str
+    prescription:str
+    content:str
 
 
-class PostCreate(PostBase):
-    pass
-
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class PostResponse(PostBase):
+class NoteOut(BaseModel):
     id:int
+    disease_symptoms: str
+    prescription:str
+    content:str
     created_at: datetime
     owner_id: int
-    owner: DoctorOut
+    owner: PatientOut
+    
+    class Config:
+        orm_mode = True
+        
+
+class NotesOut(BaseModel):
+    notes: List[NoteOut] | Optional[str] = None
     
     class Config:
         orm_mode = True
 
-
-class PostOut(BaseModel):
-    Post:PostResponse
-    votes: int
 
 class Token(BaseModel):
     access_token:str
