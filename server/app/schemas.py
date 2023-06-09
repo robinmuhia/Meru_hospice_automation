@@ -69,11 +69,17 @@ class NotesOut(BaseModel):
     class Config:
         orm_mode = True
 
-
+class UserToken(BaseModel):
+    id:int
+    
+    class Config:
+        orm_mode = True
+        
+        
 class Token(BaseModel):
     access_token:str
     token_type:str
-
+    user: UserToken
 
 class TokenData(BaseModel):
     id : Optional[str] = None

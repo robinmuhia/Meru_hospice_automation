@@ -14,24 +14,16 @@ import { setLogin, setLogout } from "state";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetLoginQuery } from "state/api";
 
 const Login = () => {
   const navigate = useNavigate();
-  const possibleUser = JSON.parse(localStorage.getItem("user"));
-  let userId = 0;
-  if (possibleUser) {
-    userId = possibleUser.user.id;
-  }
+  const userId = useSelector((state) => state.global.user.id);
   const { data, isLoading } = useGetLoginQuery(userId);
 
   if (!isLoading) {
     if (data && data.message === "authenticated") {
-      setLogin({
-        user: possibleUser.user,
-        token: `${possibleUser.token_type} ${possibleUser.access_token}`,
-      });
       navigate("/dashboard");
     } else {
       //pass
@@ -53,7 +45,6 @@ const Login = () => {
     const formData = new FormData();
     formData.append("username", data["email"]);
     formData.append("password", data["password"]);
-    console.log(data, formData);
     axios({
       method: "post",
       url: `${process.env.REACT_APP_BASE_URL}/login`,

@@ -1,25 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().global.token;
-    if (token) {
-      headers.set("authorization", token);
-    }
-    return headers;
-  },
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.REACT_APP_BASE_URL,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().global.token;
+      if (token) {
+        headers.set("Authorization", `${token}`);
+      }
+
+      return headers;
+    },
+  }),
   reducerPath: "adminApi",
-  tagTypes: ["Login"],
+  tagTypes: ["Login", "Dashboard"],
   endpoints: (build) => ({
     getLogin: build.query({
       query: (id) => `verifylogin/${id}`,
       providesTags: ["Login"],
     }),
-    // getProducts: build.query({
-    //   query: () => "client/products",
-    //   providesTags: ["Products"],
-    // }),
+    getDashboard: build.query({
+      query: (id) => `dashboard/${id}`,
+      providesTags: ["Dashboard"],
+    }),
     // getCustomers: build.query({
     //   query: () => "client/customers",
     //   providesTags: ["Customers"],
@@ -55,4 +58,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetLoginQuery } = api;
+export const { useGetLoginQuery, useGetDashboardQuery } = api;

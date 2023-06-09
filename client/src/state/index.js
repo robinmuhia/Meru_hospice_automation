@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const possibleUser = JSON.parse(localStorage.getItem("user"));
+const baseUser = { id: 0 };
 
 const initialState = {
   mode: "dark",
-  user: possibleUser ? possibleUser.user : null,
+  user: possibleUser ? possibleUser.user : baseUser,
   token: possibleUser
     ? `${possibleUser.token_type} ${possibleUser.access_token}`
     : null,
