@@ -9,7 +9,8 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     access_token_expire_days: int
-
+    domain: str
+    domain2: str
     
     class Config:
         env_file = ".env"

@@ -1,4 +1,5 @@
 import uvicorn
+from config import settings
 from fastapi import FastAPI
 import models
 from database import engine
@@ -10,11 +11,13 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()    
 
-origins = ['*']
+origins = [f'{settings.domain}',
+           f'{settings.domain2}']
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = [],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
