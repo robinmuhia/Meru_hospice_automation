@@ -16,11 +16,13 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetLoginQuery } from "state/api";
+import { useTheme } from "@emotion/react";
 
 const Login = () => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.global.user.id);
   const { data, isLoading } = useGetLoginQuery(userId);
+  const theme = useTheme();
 
   if (!isLoading) {
     if (data && data.message === "authenticated") {
@@ -85,10 +87,10 @@ const Login = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: theme.palette.neutral.main }}>
           <LockOutlined />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="secondary">
           Sign in
         </Typography>
         <Box
@@ -105,10 +107,13 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            InputLabelProps={{
+              style: { color: "#ffffff" },
+            }}
             {...register("email")}
             error={errors.email ? true : false}
           />
-          <Typography variant="inherit" color="textSecondary">
+          <Typography variant="inherit" color="secondary">
             {errors.email?.message}
           </Typography>
           <TextField
@@ -119,11 +124,15 @@ const Login = () => {
             label="Password"
             type="password"
             id="password"
+            autoFocus
+            InputLabelProps={{
+              style: { color: "#ffffff" },
+            }}
             autoComplete="current-password"
             {...register("password")}
             error={errors.password ? true : false}
           />
-          <Typography variant="inherit" color="textSecondary">
+          <Typography variant="inherit" color="secondary">
             {errors.password?.message}
           </Typography>
 
@@ -131,7 +140,7 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, bgcolor: theme.palette.main }}
           >
             Sign In
           </Button>

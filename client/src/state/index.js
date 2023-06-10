@@ -23,7 +23,7 @@ export const globalSlice = createSlice({
       state.token = action.payload.token;
     },
     setLogout: (state) => {
-      state.user = null;
+      state.user = baseUser;
       state.token = null;
       localStorage.removeItem("user");
     },
