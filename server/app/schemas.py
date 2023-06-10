@@ -31,7 +31,8 @@ class PatientOut(BaseModel):
     age: int
     phone_number:int
     num_images:int
-    owner_id:int
+    id:int
+    created_at:datetime
 
     class Config:
         orm_mode = True

@@ -20,7 +20,11 @@ export const api = createApi({
       providesTags: ["Login"],
     }),
     getDashboard: build.query({
-      query: (id) => `dashboard/${id}`,
+      query: ({ page, pageSize, search, id }) => ({
+        url: `dashboard/${id}`,
+        method: "GET",
+        params: { page, pageSize, search },
+      }),
       providesTags: ["Dashboard"],
     }),
     // getCustomers: build.query({
