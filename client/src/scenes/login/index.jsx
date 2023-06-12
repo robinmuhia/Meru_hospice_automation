@@ -107,6 +107,7 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            sx={{ input: { color: "#ffffff" } }}
             InputLabelProps={{
               style: { color: "#ffffff" },
             }}
@@ -125,6 +126,7 @@ const Login = () => {
             type="password"
             id="password"
             autoFocus
+            sx={{ input: { color: "#ffffff" } }}
             InputLabelProps={{
               style: { color: "#ffffff" },
             }}

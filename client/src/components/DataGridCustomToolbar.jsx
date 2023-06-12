@@ -20,7 +20,7 @@ const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
         </FlexBetween>
         <TextField
           label="Search for specific patient..."
-          sx={{ mb: "0.5rem", width: "15rem" }}
+          sx={{ mb: "0.5rem", width: "15rem", input: { color: "#ffffff" } }}
           onChange={(e) => setSearchInput(e.target.value)}
           value={searchInput}
           variant="standard"

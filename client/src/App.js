@@ -7,6 +7,7 @@ import { themeSettings } from "theme";
 import Navbar from "components/Navbar";
 import Login from "scenes/login";
 import Dashboard from "scenes/dashboard";
+import NewPatient from "scenes/create-patient";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<Navbar />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/createpatient" element={<NewPatient />} />
             </Route>
           </Routes>
         </ThemeProvider>

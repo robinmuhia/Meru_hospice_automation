@@ -15,7 +15,7 @@ def create_patient(patient:schemas.PatientCreate,id:int,db:Session = Depends(get
     patient_exists = db.query(models.Patient).filter(models.Patient.name == patient.name).filter(models.Patient.phone_number == patient.phone_number).first()
     if patient_exists:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail=f'{patient.name} with phone number {patient.phone_number} is already in use')
+                            detail=f'{patient.name} with phone number 0{patient.phone_number} is already in use')
     
     if id != doctor.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,

@@ -20,7 +20,7 @@ const Navbar = () => {
     >
       <AppBar position="relative" color="primary">
         <Toolbar variant="dense">
-          <Link href="/">
+          <Link href="/dashboard">
             <Typography
               variant="h2"
               color="secondary"
@@ -58,7 +58,7 @@ const Navbar = () => {
                 View All Patients
               </Typography>
             </Link>
-            <Link href="/">
+            <Link href="/createpatient">
               <Typography
                 variant="h6"
                 color="secondary"

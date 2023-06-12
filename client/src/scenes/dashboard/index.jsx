@@ -93,7 +93,7 @@ const Dashboard = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.neutral.main,
+            backgroundColor: theme.palette.secondary.main,
           },
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: theme.palette.neutral.main,
