@@ -5,14 +5,15 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Header from "components/Header";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const theme = useTheme();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [search, setSearch] = useState("");
-
   const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
   const userId = useSelector((state) => state.global.user.id);
   const { data, isLoading } = useGetDashboardQuery({
     id: userId,
@@ -28,6 +29,7 @@ const Dashboard = () => {
       sortable: false,
       filterable: false,
       flex: 0.5,
+      onclick: (id) => navigate(`patient/${id}`),
     },
     {
       field: "name",
@@ -120,6 +122,9 @@ const Dashboard = () => {
           page={page}
           pageSize={pageSize}
           paginationMode="server"
+          onRowClick={(rows) => {
+            navigate(`/patient/${rows.id}`);
+          }}
           onPageChange={(newPage) => setPage(newPage)}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           components={{ Toolbar: DataGridCustomToolbar }}

@@ -57,15 +57,14 @@ class NoteOut(BaseModel):
     prescription:str
     content:str
     created_at: datetime
-    owner_id: int
-    owner: PatientOut
-    
+       
     class Config:
         orm_mode = True
         
 
 class NotesOut(BaseModel):
     notes: List[NoteOut] | Optional[str] = None
+    owner: PatientOut
     
     class Config:
         orm_mode = True

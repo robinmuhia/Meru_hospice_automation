@@ -43,7 +43,7 @@ def get_one_patient(id:int,db:Session = Depends(get_db),doctor:int = Depends(oau
 
 
 @router.delete("/{id}",status_code=status.HTTP_204_NO_CONTENT)
-def delete_patient(id:int,db:Session = Depends(get_db),current_Patient:int = Depends(oauth2.get_current_user)):
+def delete_patient(id:int,db:Session = Depends(get_db),doctor:int = Depends(oauth2.get_current_user)):
     patient_query = db.query(models.Patient).filter(models.Patient.id == id)
     deleted_patient = patient_query.first()
     
@@ -51,7 +51,7 @@ def delete_patient(id:int,db:Session = Depends(get_db),current_Patient:int = Dep
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Patient with id: {id} does not exist')
 
-    if deleted_patient.id != current_Patient.id:
+    if deleted_patient.owner_id != doctor.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail='Not authorized to perform requested action')
 

@@ -13,7 +13,7 @@ export const api = createApi({
     },
   }),
   reducerPath: "adminApi",
-  tagTypes: ["Login", "Dashboard"],
+  tagTypes: ["Login", "Dashboard", "Notes"],
   endpoints: (build) => ({
     getLogin: build.query({
       query: (id) => `verifylogin/${id}`,
@@ -27,10 +27,10 @@ export const api = createApi({
       }),
       providesTags: ["Dashboard"],
     }),
-    // getCustomers: build.query({
-    //   query: () => "client/customers",
-    //   providesTags: ["Customers"],
-    // }),
+    getNotes: build.query({
+      query: (id) => `notes/${id}`,
+      providesTags: ["Notes"],
+    }),
     // getTransactions: build.query({
     //   query: ({ page, pageSize, sort, search }) => ({
     //     url: "client/transactions",
@@ -62,4 +62,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetLoginQuery, useGetDashboardQuery } = api;
+export const { useGetLoginQuery, useGetDashboardQuery, useGetNotesQuery } = api;

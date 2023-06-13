@@ -2,6 +2,7 @@ import models,schemas,oauth2
 from fastapi import Response,status,HTTPException,Depends,APIRouter
 from sqlalchemy.orm import Session
 from database import get_db
+from sqlalchemy import desc
 
 
 router = APIRouter(
@@ -28,7 +29,7 @@ def create_note(id:int,note:schemas.NoteCreate,db:Session = Depends(get_db),doct
 
 
 @router.get('/{id}',status_code=status.HTTP_200_OK,response_model=schemas.NotesOut)
-def get_note(id:int,db:Session = Depends(get_db),doctor:int = Depends(oauth2.get_current_user)):
+def get_notes(id:int,db:Session = Depends(get_db),doctor:int = Depends(oauth2.get_current_user)):
     patient = db.query(models.Patient).filter(models.Patient.id == id).first()
     if not patient:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -37,11 +38,9 @@ def get_note(id:int,db:Session = Depends(get_db),doctor:int = Depends(oauth2.get
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                     detail='Not authorized to perform requested action')
         
-    notes = db.query(models.Note).filter(patient.id == models.Note.owner_id).all()
-    if notes == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'post with id: {id} was not found')
-    return {"notes":notes}
+    notes = db.query(models.Note).filter(patient.id == models.Note.owner_id).order_by(desc("created_at")).all()
+
+    return {"notes":notes,"owner":patient}
 
 
 @router.get('/specific/{id}',status_code=status.HTTP_200_OK,response_model=schemas.NoteOut)
