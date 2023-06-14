@@ -48,14 +48,14 @@ class PatientsOut(BaseModel):
 class NoteCreate(BaseModel):
     disease_symptoms: str
     prescription:str
-    content:str
+    title:str
 
 
 class NoteOut(BaseModel):
     id:int
     disease_symptoms: str
     prescription:str
-    content:str
+    title:str
     created_at: datetime
        
     class Config:

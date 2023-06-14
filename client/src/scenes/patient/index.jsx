@@ -14,19 +14,22 @@ const Notes = () => {
   let header;
   let years;
   let months;
-  let patientId;
   if (data) {
     header = `Data for ${data.owner.name}`;
     years = Math.floor(data.owner.age / 12);
     months = Math.floor(data.owner.age % 12);
-    patientId = data.owner.id;
   }
-  const handleDelete = () => {
+  const handleDelete = (type, id) => {
+    let url;
+    if (type === "patient") {
+      url = `${process.env.REACT_APP_BASE_URL}/patient/${id}`;
+    } else if (type === "note") {
+      url = `${process.env.REACT_APP_BASE_URL}/notes/${id}`;
+    }
     const hasConfirmed = window.confirm(
-      "Are you sure you want to delete this patient?"
+      `Are you sure you want to delete this ${type}?`
     );
     if (hasConfirmed) {
-      const url = `${process.env.REACT_APP_BASE_URL}/patient/${patientId}`;
       axios
         .delete(url, {
           headers: {
@@ -55,11 +58,24 @@ const Notes = () => {
   return (
     <>
       {data && (
-        <Box margin="10px">
-          <Header title={header} subtitle="Interact with data for patient" />
+        <Box
+          m="1.5rem 2.5rem"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Header
+            title={header}
+            subtitle="Interact with data for the patient"
+          />
           <Box
             sx={{
               marginTop: "10px",
+              borderBottom: "10px",
               bgcolor: "#ffffff",
               display: "flex",
               flexDirection: "column",
@@ -67,22 +83,191 @@ const Notes = () => {
               alignItems: "center",
             }}
           >
-            <Typography component="h1" variant="h5" marginTop="10px">
-              Name: {data.owner.name}
-            </Typography>
-            <Typography component="h1" variant="h5" marginTop="10px">
-              Age: {years} years {months} months
-            </Typography>
-            <Typography component="h1" variant="h5" marginTop="10px">
-              Phone number: 0{data.owner.phone_number}
-            </Typography>
-            <Box>
-              <Button onClick={() => navigate(`/editpatient/${data.owner.id}`)}>
-                Edit
-              </Button>
-              <Button onClick={handleDelete}>Delete</Button>
+            <Box
+              sx={{
+                display: "inline-grid",
+                gridAutoFlow: "row",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gridTemplateRows: "repeat(1, 1fr)",
+                rowGap: "50px",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              <Box>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                >
+                  Name: {data.owner.name}
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                >
+                  Age: {years} years {months} months
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                >
+                  Phone number: 0{data.owner.phone_number}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "inline-grid",
+                  gridAutoFlow: "column",
+                  gridTemplateColumns: "repeat(1, 1fr)",
+                  gridTemplateRows: "repeat(3, 1fr)",
+                  columnGap: "50px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => navigate(`/editpatient/${data.owner.id}`)}
+                >
+                  Edit Patient
+                </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => handleDelete("patient", data.owner.id)}
+                >
+                  Delete Patient
+                </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() =>
+                    navigate(`/createnote/${data.owner.id}/${data.owner.name}`)
+                  }
+                >
+                  Create Note
+                </Button>
+              </Box>
             </Box>
           </Box>
+          {data.notes && (
+            <>
+              {data.notes.map((note, index) => {
+                return (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: "50vw",
+                      overflow: "auto",
+                      marginTop: "10px",
+                      bgcolor: "#ffffff",
+                      display: "inline-block",
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                        fontWeight="bold"
+                        sx={{ alignItems: "center", justifyContent: "center" }}
+                      >
+                        TITLE
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                      >
+                        {note.title}
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                        fontWeight="bold"
+                        sx={{ alignItems: "center", justifyContent: "center" }}
+                      >
+                        SYMPTOMS/OBSERVATIONS
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                      >
+                        {note.disease_symptoms}
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                        fontWeight="bold"
+                        sx={{ alignItems: "center", justifyContent: "center" }}
+                      >
+                        RECOMMENDATIONS/PRESCRIPTIONS
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                      >
+                        {note.prescription}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "inline-grid",
+                        gridAutoFlow: "row",
+                        gridTemplateColumns: "repeat(2, 1fr)",
+                        gridTemplateRows: "repeat(1, 1fr)",
+                        columnGap: "50px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginLeft: "25%",
+                      }}
+                    >
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={() =>
+                          navigate(
+                            `/editnote/${note.id}/${data.owner.name}/${data.owner.id}`
+                          )
+                        }
+                      >
+                        Edit Note
+                      </Button>
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={() => handleDelete("note", note.id)}
+                      >
+                        Delete Note
+                      </Button>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </>
+          )}
         </Box>
       )}
     </>
