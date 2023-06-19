@@ -85,11 +85,7 @@ const Notes = () => {
           >
             <Box
               sx={{
-                display: "inline-grid",
-                gridAutoFlow: "row",
-                gridTemplateColumns: "repeat(2, 1fr)",
-                gridTemplateRows: "repeat(1, 1fr)",
-                rowGap: "50px",
+                display: "inline-block",
                 justifyContent: "flex-start",
                 alignItems: "center",
               }}
@@ -100,8 +96,10 @@ const Notes = () => {
                   variant="h5"
                   marginTop="10px"
                   marginLeft="15px"
+                  fontWeight="bold"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
                 >
-                  Name: {data.owner.name}
+                  NAME
                 </Typography>
                 <Typography
                   component="h1"
@@ -109,7 +107,17 @@ const Notes = () => {
                   marginTop="10px"
                   marginLeft="15px"
                 >
-                  Age: {years} years {months} months
+                  {data.owner.name}
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                  fontWeight="bold"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  AGE
                 </Typography>
                 <Typography
                   component="h1"
@@ -117,15 +125,33 @@ const Notes = () => {
                   marginTop="10px"
                   marginLeft="15px"
                 >
-                  Phone number: 0{data.owner.phone_number}
+                  {years} years {months} months
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                  fontWeight="bold"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                >
+                  PHONE NUMBER
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  marginTop="10px"
+                  marginLeft="15px"
+                >
+                  0{data.owner.phone_number}
                 </Typography>
               </Box>
               <Box
                 sx={{
                   display: "inline-grid",
-                  gridAutoFlow: "column",
-                  gridTemplateColumns: "repeat(1, 1fr)",
-                  gridTemplateRows: "repeat(3, 1fr)",
+                  gridAutoFlow: "row",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gridTemplateRows: "repeat(1, 1fr)",
                   columnGap: "50px",
                   justifyContent: "center",
                   alignItems: "center",
@@ -183,7 +209,7 @@ const Notes = () => {
                         fontWeight="bold"
                         sx={{ alignItems: "center", justifyContent: "center" }}
                       >
-                        TITLE
+                        DISEASE/ILLNESS/INJURY
                       </Typography>
                       <Typography
                         component="h1"
@@ -228,6 +254,24 @@ const Notes = () => {
                         marginLeft="15px"
                       >
                         {note.prescription}
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                        fontWeight="bold"
+                        sx={{ alignItems: "center", justifyContent: "center" }}
+                      >
+                        DATE OF VISIT (yyyy,mm,dd)
+                      </Typography>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        marginTop="10px"
+                        marginLeft="15px"
+                      >
+                        {note.created_at.slice(0, 10)}
                       </Typography>
                     </Box>
                     <Box

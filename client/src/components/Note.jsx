@@ -134,6 +134,7 @@ const Note = ({ type, title, symptoms, prescription, patientid }) => {
                   <TextField
                     required
                     fullWidth
+                    multiline
                     id="name"
                     label="Name of disease/injury/illness"
                     name="name"
@@ -150,6 +151,7 @@ const Note = ({ type, title, symptoms, prescription, patientid }) => {
                   <TextField
                     required
                     fullWidth
+                    multiline
                     id="symptoms"
                     label="Symptoms, Observations or General Notes"
                     name="symptoms"
@@ -166,6 +168,7 @@ const Note = ({ type, title, symptoms, prescription, patientid }) => {
                   <TextField
                     required
                     fullWidth
+                    multiline
                     id="prescription"
                     label="Prescription, Advice or Recommendations for Patient"
                     name="prescription"

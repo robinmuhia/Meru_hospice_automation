@@ -59,7 +59,7 @@ const Dashboard = () => {
     },
     {
       field: "created_at",
-      headerName: "Last Visit",
+      headerName: "First Visit",
       flex: 0.5,
       filterable: false,
       renderCell: (params) => params.value.slice(0, 10),
