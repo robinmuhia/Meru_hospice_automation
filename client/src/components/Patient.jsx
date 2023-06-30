@@ -24,16 +24,14 @@ const PatientForm = ({ type, name, ageyears, agemonths, phonenumber, id }) => {
     name: Yup.string().required("A name for the patient is required"),
     phonenumber: Yup.number(
       "The phone number is invalid! Please write it for example 078345678"
-    )
-      .required("Phone number of the patient is required")
-      .positive(),
+    ).required("Phone number of the patient is required"),
     ageyears: Yup.number("Age is invalid! Please write a number")
       .required("Age of patient is required")
-      .positive()
+      .min(0)
       .max(104),
     agemonths: Yup.number("Age is invalid! Please write a number")
       .required("Age of patient is required")
-      .positive()
+      .min(0)
       .max(11),
   });
   const {
